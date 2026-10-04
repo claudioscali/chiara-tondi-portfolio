@@ -1,0 +1,1568 @@
+/* ========================================
+   1. RESET
+======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Manrope", sans-serif;
+    background: var(--background); /* Prima era #f7f6f2 */
+    color:var(--text);            /* Prima era #191817 */
+    line-height: 1.6;
+}
+
+img {
+    display: block;
+    width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* ========================================
+   2. VARIABLES
+======================================== */
+
+:root {
+    --background: #f7f6f2;
+    --text: #191817;
+    --muted: #77736d;
+    --border: #d8d5ce;
+    --white: #ffffff;
+
+    --serif: "Cormorant Garamond", Georgia, serif;
+    --sans: "Manrope", Arial, sans-serif;
+
+    --max-width: 1400px;
+
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 2rem;
+    --space-lg: 5rem;
+    --space-xl: 9rem;
+}
+
+
+/* ========================================
+   3. GLOBAL
+======================================== */
+
+body {
+    overflow-x: hidden;
+}
+
+.container {
+    width: min(
+        calc(100% - 4rem),
+        var(--max-width)
+    );
+
+    margin-inline: auto;
+}
+
+::selection {
+    background: #191817;
+    color: #f7f6f2;
+}
+
+
+/* ========================================
+   4. TYPOGRAPHY
+======================================== */
+
+h1,
+h2,
+h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    line-height: 0.95;
+}
+
+h1 {
+    font-size: clamp(
+        4rem,
+        8vw,
+        9rem
+    );
+
+    letter-spacing: -0.045em;
+}
+
+h2 {
+    font-size: clamp(
+        3rem,
+        6vw,
+        6rem
+    );
+
+    letter-spacing: -0.04em;
+}
+
+h3 {
+    font-size: 2rem;
+}
+
+em {
+    font-style: italic;
+}
+
+.eyebrow {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.section-number {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+}
+
+
+/* ========================================
+   5. HEADER
+======================================== */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    padding: 1.5rem 0;
+
+    border-bottom: 1px solid var(--border);
+
+    background: var(--background);
+
+    transform: translateY(0);
+
+    transition:
+        transform 0.35s ease;
+}
+
+.site-header.header-hidden {
+    transform: translateY(-100%);
+}
+
+.nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+}
+
+.logo img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+nav {
+    display: flex;
+    gap: 2rem;
+}
+
+nav a {
+    position: relative;
+
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+
+    transition:
+        opacity 0.25s ease;
+}
+
+nav a:hover {
+    opacity: 0.55;
+}
+
+nav a.active::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: -0.45rem;
+    left: 0;
+
+    width: 100%;
+    height: 1px;
+
+    background: var(--text);
+}
+
+
+/* ========================================
+   6. HERO
+======================================== */
+
+.hero {
+    padding: 5rem 0 8rem;
+}
+
+.hero-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 0.9fr)
+        minmax(0, 1.1fr);
+
+    align-items: end;
+
+    gap: 5rem;
+}
+
+.hero-text {
+    padding-bottom: 2rem;
+}
+
+.hero-text h1 {
+    margin: 1rem 0 2rem;
+}
+
+.hero-description {
+    width: min(100%, 31rem);
+
+    color: var(--muted);
+
+    font-size: 0.95rem;
+    line-height: 1.8;
+
+    margin-bottom: 2rem;
+}
+
+.hero-image {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.hero-image:hover img {
+    transform: scale(1.025);
+}
+
+
+/* ========================================
+   7. LINKS
+======================================== */
+
+.text-link {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 0.8rem;
+
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+
+    border-bottom: 1px solid var(--text);
+
+    padding-bottom: 0.35rem;
+
+    transition:
+        gap 0.25s ease,
+        opacity 0.25s ease;
+}
+
+.text-link:hover {
+    gap: 1.2rem;
+    opacity: 0.65;
+}
+
+.button {
+    display: inline-block;
+
+    margin-top: 2rem;
+
+    padding: 0.9rem 1.5rem;
+
+    border: 1px solid var(--text);
+
+    font-size: 0.75rem;
+    font-weight: 600;
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease;
+}
+
+.button:hover {
+    background: var(--text);
+    color: var(--background);
+}
+
+
+/* ========================================
+   8. INTRO
+======================================== */
+
+.intro-section {
+    padding: 9rem 0;
+
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.intro-grid {
+    display: grid;
+
+    grid-template-columns:
+        0.25fr
+        0.75fr;
+
+    gap: 3rem;
+}
+
+.intro-grid h2 {
+    max-width: 50rem;
+    margin-bottom: 2rem;
+}
+
+.large-text {
+    max-width: 42rem;
+
+    font-size: 1.25rem;
+    line-height: 1.8;
+
+    color: var(--muted);
+}
+
+
+/* ========================================
+   9. FEATURED PROJECTS
+======================================== */
+
+.featured-projects {
+    padding: 9rem 0;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+
+    margin-bottom: 5rem;
+}
+
+.section-heading h2 {
+    margin-top: 1rem;
+}
+
+.project-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 4rem 2rem;
+}
+
+.project-card-large {
+    grid-column: 1 / -1;
+}
+
+.project-image, 
+.portfolio-image {
+    overflow: hidden;
+    background: #dedbd4;
+    position: relative;
+    /* Assicura che il contenitore si centri nella sua colonna */
+    margin: 0 auto; 
+}
+
+/* Regola le proporzioni e la dimensione intermedia */
+.project-card:not(.project-card-large) .project-image,
+.portfolio-image {
+    aspect-ratio: 4 / 5;
+    max-height: 85vh; /* Alzato a 85vh per farle più grandi della prova precedente */
+    width: 100%;      /* Tenta di occupare tutto lo spazio, bloccandosi al limite dell'altezza */
+}
+
+.project-card-large .project-image {
+    aspect-ratio: 4 / 5;
+    max-height: 85vh; /* Alzato a 85vh per farle più grandi della prova precedente */
+    width: 100%;   
+}
+
+.project-image img, 
+.portfolio-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.035);
+}
+
+.project-info {
+    display: flex;
+    justify-content: space-between;
+
+    gap: 2rem;
+
+    padding-top: 1.25rem;
+
+    border-top: 1px solid var(--border);
+}
+
+.project-info h3 {
+    margin-bottom: 0.2rem;
+}
+
+.project-info p,
+.project-info span {
+    font-size: 0.7rem;
+    color: var(--muted);
+}
+
+.project-info span {
+    align-self: end;
+}
+
+
+/* ========================================
+   10. STATEMENT
+======================================== */
+
+.statement-section {
+    padding: 10rem 0;
+
+    background: #ece9e1;
+}
+
+.statement {
+    max-width: 75rem;
+
+    margin-top: 2rem;
+
+    font-size: clamp(
+        3.5rem,
+        7vw,
+        8rem
+    );
+}
+
+
+/* ========================================
+   11. PAGE INTRO
+======================================== */
+
+.page-intro {
+    padding: 7rem 0 8rem;
+}
+
+.page-intro h1 {
+    margin-top: 1.5rem;
+}
+
+
+/* ========================================
+   12. ABOUT
+======================================== */
+
+.about-main {
+    padding: 4rem 0 9rem;
+}
+
+.about-grid {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 0.9fr)
+        minmax(0, 1.1fr);
+
+    gap: 7rem;
+
+    align-items: start;
+}
+
+.about-image {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+}
+
+.about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about-text h2 {
+    margin: 1rem 0 2rem;
+}
+
+.about-text p:not(.eyebrow) {
+    max-width: 38rem;
+
+    color: var(--muted);
+
+    margin-bottom: 1.5rem;
+
+    line-height: 1.9;
+}
+
+
+/* ========================================
+   13. SKILLS
+======================================== */
+
+.skills-section {
+    padding: 9rem 0;
+
+    border-top: 1px solid var(--border);
+}
+
+.skills-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    margin-top: 5rem;
+}
+
+.skill {
+    padding: 2rem 2rem 3rem 0;
+
+    border-top: 1px solid var(--border);
+}
+
+.skill:nth-child(odd) {
+    border-right: 1px solid var(--border);
+}
+
+.skill:nth-child(even) {
+    padding-left: 2rem;
+}
+
+.skill span {
+    font-size: 0.7rem;
+    color: var(--muted);
+}
+
+.skill h3 {
+    margin: 1rem 0;
+}
+
+.skill p {
+    max-width: 30rem;
+
+    color: var(--muted);
+
+    font-size: 0.9rem;
+}
+
+
+/* ========================================
+   14. EDUCATION
+======================================== */
+
+.education-section {
+    padding: 9rem 0;
+
+    background: #ece9e1;
+}
+
+.timeline {
+    margin-top: 4rem;
+}
+
+.timeline-item {
+    display: grid;
+
+    grid-template-columns:
+        0.3fr
+        0.7fr;
+
+    gap: 2rem;
+
+    padding: 2rem 0;
+
+    border-top: 1px solid var(--border);
+}
+
+.timeline-item:last-child {
+    border-bottom: 1px solid var(--border);
+}
+
+.timeline-item > span {
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+.timeline-item h3 {
+    margin-bottom: 0.4rem;
+}
+
+.timeline-item p {
+    color: var(--muted);
+}
+
+
+/* ========================================
+   15. CTA
+======================================== */
+
+.cta-section {
+    padding: 10rem 0;
+}
+
+.cta-section h2 {
+    margin-top: 1rem;
+
+    max-width: 70rem;
+}
+
+
+/* ========================================
+   16. PORTFOLIO
+======================================== */
+
+.portfolio-section {
+    padding-bottom: 10rem;
+}
+
+
+/* ========================================
+   PORTFOLIO CAROUSEL
+======================================== */
+
+.portfolio-carousel {
+    position: relative;
+
+    width: 100%;
+
+    perspective: 1000px;
+
+    padding: 2rem 0;
+}
+
+.portfolio-carousel.disable-transitions * {
+    transition: none !important;
+}
+
+.carousel-viewport {
+    width: 100%;
+
+    overflow: hidden;
+
+    padding: 2rem 0;
+
+    /*
+     * Permette lo scroll verticale su mobile
+     * senza impedire lo swipe orizzontale
+     * gestito dal JavaScript.
+     */
+    touch-action: pan-y;
+
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.carousel-track {
+    display: flex;
+
+    align-items: center;
+
+    gap: 0;
+
+    cursor: grab;
+
+    will-change: transform;
+
+    transition:
+        transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.carousel-track:active {
+    cursor: grabbing;
+}
+
+
+/* ========================================
+   CARD GENERICA
+======================================== */
+
+.carousel-track .portfolio-card {
+    flex: 0 0 42%;
+
+    margin: 0 -8%;
+
+    position: relative;
+
+    z-index: 1;
+
+    transform: scale(0.65);
+
+    opacity: 0.815;
+
+    filter: blur(0.2px);
+
+    transition:
+        transform 0.5s ease,
+        opacity 0.5s ease,
+        filter 0.5s ease,
+        z-index 0.5s ease;
+
+    /*
+     * IMPORTANTE:
+     * tutte le card devono ricevere il click,
+     * perché anche quelle laterali devono poter
+     * essere cliccate per portarle al centro.
+     */
+    pointer-events: auto;
+
+    cursor: pointer;
+}
+
+
+/* ========================================
+   CARD ADIACENTE
+======================================== */
+
+.carousel-track .portfolio-card.is-adjacent {
+    z-index: 5;
+
+    transform: scale(0.78);
+
+    opacity: 0.945;
+
+    filter: blur(0.1px);
+}
+
+
+/* ========================================
+   CARD CENTRALE
+======================================== */
+
+.carousel-track .portfolio-card.is-active {
+    z-index: 10;
+
+    transform: scale(1);
+
+    opacity: 1;
+
+    filter: blur(0);
+
+    pointer-events: auto;
+
+    cursor: pointer;
+}
+
+
+/* ========================================
+   IMMAGINE DELLA CARD
+======================================== */
+
+.portfolio-image {
+    aspect-ratio: 4 / 5;
+
+    overflow: hidden;
+
+    background: #dedbd4;
+
+    position: relative;
+}
+
+.portfolio-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+
+/*
+ * Hover sull'immagine.
+ * La card centrale e quelle laterali
+ * possono avere un leggero effetto zoom.
+ */
+
+.portfolio-card:hover .portfolio-image img {
+    transform: scale(1.035);
+}
+
+
+/* ========================================
+   NUMERO SULL'IMMAGINE
+======================================== */
+
+.carousel-number {
+    position: absolute;
+
+    top: 1rem;
+    left: 1rem;
+
+    z-index: 2;
+
+    font-family: var(--sans);
+
+    font-size: 0.7rem;
+
+    font-weight: 600;
+
+    letter-spacing: 0.1em;
+
+    color: #ffffff;
+
+    pointer-events: none;
+}
+
+
+/* ========================================
+   PULSANTI CAROUSEL
+======================================== */
+
+.carousel-button {
+    position: absolute;
+
+    top: 50%;
+
+    z-index: 20;
+
+    width: 3.5rem;
+    height: 3.5rem;
+
+    border-radius: 50%;
+
+    border: 1px solid var(--text);
+
+    background: var(--background);
+
+    color: var(--text);
+
+    font-size: 1.1rem;
+
+    cursor: pointer;
+
+    transform: translateY(-50%);
+
+    transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.carousel-button:hover {
+    background: var(--text);
+
+    color: var(--background);
+}
+
+.carousel-button:active {
+    transform: translateY(-50%) scale(0.96);
+}
+
+.carousel-prev {
+    left: 0.5rem;
+}
+
+.carousel-next {
+    right: 0.5rem;
+}
+
+
+/* ========================================
+   PORTFOLIO META
+======================================== */
+
+.portfolio-meta {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding-top: 1.25rem;
+
+    border-top: 1px solid var(--border);
+}
+
+.portfolio-meta h2 {
+    font-size: 2rem;
+
+    margin-bottom: 0.2rem;
+}
+
+.portfolio-meta p,
+.portfolio-meta span {
+    font-size: 0.7rem;
+
+    color: var(--muted);
+}
+
+
+/* ========================================
+   PORTFOLIO GRID
+======================================== */
+
+.portfolio-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 6rem 2rem;
+}
+
+
+/* ========================================
+   17. CONTACT
+======================================== */
+
+.contact-section {
+    padding: 9rem 0 12rem;
+}
+
+.contact-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr;
+
+    gap: 6rem;
+}
+
+.contact-details {
+    padding-top: 1rem;
+}
+
+.contact-block {
+    padding: 2rem 0;
+
+    border-top: 1px solid var(--border);
+}
+
+.big-link {
+    display: block;
+
+    width: fit-content;
+
+    margin-top: 0.7rem;
+
+    font-family: var(--serif);
+
+    font-size: 2.5rem;
+
+    border-bottom: 1px solid transparent;
+
+    transition:
+        border-color 0.25s ease,
+        opacity 0.25s ease;
+}
+
+.big-link:hover {
+    border-color: var(--text);
+}
+
+.contact-location {
+    margin-top: 0.7rem;
+
+    font-family: var(--serif);
+
+    font-size: 2.5rem;
+}
+
+
+/* ========================================
+   18. PROJECT PAGE
+======================================== */
+
+.project-header {
+    padding: 7rem 0 6rem;
+}
+
+.project-header-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        0.8fr;
+
+    gap: 6rem;
+
+    align-items: end;
+}
+
+.project-description {
+    padding-bottom: 0.5rem;
+}
+
+.project-description > p {
+    max-width: 30rem;
+
+    margin-bottom: 3rem;
+
+    color: var(--muted);
+
+    line-height: 1.8;
+}
+
+.project-data {
+    display: grid;
+
+    gap: 1rem;
+}
+
+.project-data span {
+    display: grid;
+
+    grid-template-columns:
+        0.4fr
+        0.6fr;
+
+    padding-top: 1rem;
+
+    border-top: 1px solid var(--border);
+
+    font-size: 0.7rem;
+
+    color: var(--muted);
+}
+
+.project-data strong {
+    color: var(--text);
+
+    font-weight: 500;
+}
+
+.project-hero-image {
+    padding-bottom: 8rem;
+}
+
+.project-hero-image img {
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    object-fit: cover;
+}
+
+.project-story {
+    padding: 9rem 0;
+
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.project-story-grid {
+    display: grid;
+
+    grid-template-columns:
+        0.25fr
+        0.75fr;
+
+    gap: 3rem;
+}
+
+.project-story h2 {
+    max-width: 55rem;
+
+    margin-bottom: 3rem;
+}
+
+.project-story p:not(.section-number) {
+    max-width: 42rem;
+
+    color: var(--muted);
+
+    line-height: 1.9;
+
+    margin-bottom: 1.5rem;
+}
+
+.project-gallery {
+    padding: 8rem 0;
+}
+
+.gallery-two {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 2rem;
+}
+
+.gallery-two img {
+    aspect-ratio: 4 / 5;
+
+    object-fit: cover;
+}
+
+.gallery-large {
+    margin-top: 2rem;
+}
+
+.gallery-large img {
+    aspect-ratio: 16 / 9;
+
+    object-fit: cover;
+}
+
+.next-project {
+    padding: 9rem 0;
+
+    border-top: 1px solid var(--border);
+
+    text-align: center;
+}
+
+.next-project h2 {
+    margin-top: 1rem;
+
+    transition:
+        opacity 0.25s ease;
+}
+
+.next-project a:hover h2 {
+    opacity: 0.55;
+}
+
+
+/* ========================================
+   19. FOOTER
+======================================== */
+
+.site-footer {
+    padding: 4rem 0;
+
+    border-top: 1px solid var(--border);
+}
+
+.footer-grid {
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr
+        auto;
+
+    gap: 2rem;
+
+    align-items: end;
+}
+
+.footer-name {
+    font-weight: 600;
+
+    letter-spacing: 0.05em;
+}
+
+.footer-grid p {
+    font-size: 0.7rem;
+
+    color: var(--muted);
+}
+
+.footer-links {
+    display: flex;
+
+    gap: 1.5rem;
+}
+
+.footer-links a {
+    font-size: 0.7rem;
+
+    border-bottom: 1px solid transparent;
+
+    transition:
+        border-color 0.25s ease;
+}
+
+.footer-links a:hover {
+    border-color: var(--text);
+}
+
+.copyright {
+    text-align: right;
+}
+
+
+/* ========================================
+   20. ACCESSIBILITY
+======================================== */
+
+:focus-visible {
+    outline: 2px solid var(--text);
+
+    outline-offset: 4px;
+}
+
+
+/* ========================================
+   21. RESPONSIVE
+======================================== */
+
+@media (max-width: 900px) {
+
+    .container {
+        width: min(
+            calc(100% - 2rem),
+            var(--max-width)
+        );
+    }
+
+    .hero-grid,
+    .about-grid,
+    .contact-grid,
+    .project-header-grid {
+        grid-template-columns: 1fr;
+
+        gap: 3rem;
+    }
+
+    .hero {
+        padding-top: 3rem;
+    }
+
+    .hero-text {
+        padding-bottom: 0;
+    }
+
+    .intro-grid,
+    .project-story-grid {
+        grid-template-columns: 1fr;
+
+        gap: 1.5rem;
+    }
+
+    .section-heading {
+        align-items: start;
+
+        flex-direction: column;
+
+        gap: 2rem;
+    }
+
+    .portfolio-grid {
+        gap: 4rem 1rem;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .skill:nth-child(odd) {
+        border-right: none;
+    }
+
+    .skill:nth-child(even) {
+        padding-left: 0;
+    }
+
+    .footer-grid {
+        grid-template-columns:
+            1fr
+            1fr;
+    }
+
+    .copyright {
+        text-align: left;
+
+        grid-column: 1 / -1;
+    }
+}
+
+
+/* ========================================
+   22. MOBILE
+======================================== */
+
+@media (max-width: 600px) {
+
+    .container {
+        width: min(
+            calc(100% - 1.5rem),
+            var(--max-width)
+        );
+    }
+
+    .site-header {
+        padding: 1rem 0;
+    }
+
+    .nav-wrapper {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 1rem;
+    }
+
+    nav {
+        width: 100%;
+
+        justify-content: space-between;
+
+        gap: 0.75rem;
+    }
+
+    nav a {
+        font-size: 0.68rem;
+    }
+
+    h1 {
+        font-size: clamp(
+            3.5rem,
+            16vw,
+            5rem
+        );
+    }
+
+    h2 {
+        font-size: clamp(
+            2.8rem,
+            13vw,
+            4rem
+        );
+    }
+
+    .hero {
+        padding: 3rem 0 5rem;
+    }
+
+    .hero-grid {
+        gap: 3rem;
+    }
+
+    .intro-section,
+    .featured-projects,
+    .skills-section,
+    .education-section,
+    .cta-section,
+    .project-gallery,
+    .project-story,
+    .contact-section {
+        padding: 5rem 0;
+    }
+
+    .statement-section {
+        padding: 6rem 0;
+    }
+
+    .project-grid,
+    .portfolio-grid,
+    .gallery-two {
+        grid-template-columns: 1fr;
+    }
+
+    .project-card-large {
+        grid-column: auto;
+    }
+
+    .project-card-large .project-image {
+        aspect-ratio: 4 / 5;
+    }
+
+    .timeline-item {
+        grid-template-columns: 1fr;
+
+        gap: 0.75rem;
+    }
+
+    .big-link,
+    .contact-location {
+        font-size: 2rem;
+    }
+
+    .project-header {
+        padding: 4rem 0;
+    }
+
+    .project-hero-image {
+        padding-bottom: 4rem;
+    }
+
+    .project-hero-image img,
+    .gallery-large img {
+        aspect-ratio: 4 / 5;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-links {
+        flex-direction: column;
+
+        gap: 0.7rem;
+    }
+
+    .copyright {
+        grid-column: auto;
+    }
+
+
+    /* ========================================
+       CAROUSEL - MOBILE
+    ======================================== */
+
+    .carousel-track .portfolio-card {
+        flex: 0 0 78%;
+
+        margin: 0 -18%;
+    }
+
+    .carousel-track .portfolio-card.is-adjacent {
+        transform: scale(0.78);
+    }
+
+    .carousel-track .portfolio-card.is-active {
+        transform: scale(1);
+    }
+
+    .carousel-button {
+        display: none;
+    }
+}
+
+
+/* ========================================
+   23. REDUCED MOTION
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+    }
+}
+
+.hero {
+    position: relative; /* Assicurati che la sezione hero sia relativa */
+    z-index: 1;    
+}
+#hero-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Lo manda dietro al testo */
+    pointer-events: none; /* Evita che blocchi i click */
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero-image, .project-image {
+    overflow: hidden;
+    position: relative;
+}
+
+.hero-image img, .project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.2); /* Ingrandisce l'immagine creando il margine nascosto */
+    will-change: transform;
+}
+
+@media (pointer: fine) { /* Si attiva solo su dispositivi con mouse, ignora il touch */
+    body {
+        cursor: none; /* Nasconde il cursore di default */
+    }
+    a, button, .portfolio-card {
+        cursor: none !important;
+    }
+    .custom-cursor {
+        position: fixed;
+        top: 0; left: 0;
+        width: 16px; height: 16px;
+        border: 1px solid var(--text);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: width 0.2s, height 0.2s, background-color 0.2s;
+    }
+    .custom-cursor.hovering {
+        width: 32px; height: 32px;
+        background-color: rgba(25, 24, 23, 0.1);
+    }
+}
+
+/* Transizione globale per i colori */
+body, .site-header, .statement-section, .education-section {
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Variabili Dark Mode */
+[data-theme="dark"] {
+    --background: #141414;
+    --text: #f7f6f2;
+    --muted: #a09c94;
+    --border: #333333;
+    --white: #0a0a0a;
+}
+
+[data-theme="dark"] .statement-section, 
+[data-theme="dark"] .education-section {
+    background: #1a1a1a;
+}
