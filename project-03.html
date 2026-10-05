@@ -16,6 +16,18 @@
 
     <title>NeedS — Chiara Tondi</title>
 
+    <script>
+        (function () {
+            var t = localStorage.getItem("theme");
+            if (
+                t === "dark" ||
+                (!t && window.matchMedia("(prefers-color-scheme: dark)").matches)
+            ) {
+                document.documentElement.setAttribute("data-theme", "dark");
+            }
+        })();
+    </script>
+
     <link
         rel="preconnect"
         href="https://fonts.googleapis.com"
@@ -28,7 +40,7 @@
     >
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600&display=swap"
         rel="stylesheet"
     >
 
@@ -38,16 +50,15 @@
 
 
 <body>
-    <div class="custom-cursor"></div>
 
     <header class="site-header">
 
         <div class="container nav-wrapper">
 
             <a class="logo" href="index.html">
-    <img src="images/logo.jpg" alt="Chiara Tondi">
-    CHIARA TONDI
-</a>
+                <img src="images/logo.jpg" alt="Chiara Tondi">
+                CHIARA TONDI
+            </a>
 
             <nav aria-label="Navigazione principale">
 
@@ -59,7 +70,17 @@
 
                 <a href="contact.html">Contact</a>
 
-                <button id="theme-toggle" class="button" style="margin-top: 0; padding: 0.5rem 1rem;">🌓</button>
+                <button id="theme-toggle" type="button" aria-label="Cambia tema">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <g class="icon-moon">
+                            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+                        </g>
+                        <g class="icon-sun">
+                            <circle cx="12" cy="12" r="4"/>
+                            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+                        </g>
+                    </svg>
+                </button>
 
             </nav>
 
@@ -76,26 +97,23 @@
 
                 <div>
 
-                    <p class="eyebrow">
+                    <p class="eyebrow" data-reveal>
                         Experimental Design · 2025
                     </p>
 
-                    <h1>
-                        NeedS<br>
-                        <em></em>
-                    </h1>
+                    <h1>NeedS</h1>
 
                 </div>
 
 
                 <div class="project-description">
 
-                    <p>
+                    <p data-reveal>
                         Uno studio sulle forme geometriche
                         reinterpretate attraverso materiali morbidi.
                     </p>
 
-                    <div class="project-data">
+                    <div class="project-data" data-reveal-stagger>
 
                         <span>
                             Year
@@ -109,7 +127,7 @@
 
                         <span>
                             Techniques
-                            <strong>Draping & </strong>
+                            <strong>Draping</strong>
                         </span>
 
                     </div>
@@ -125,10 +143,14 @@
 
             <div class="container">
 
-                <img
-                    src="images/progetto-3/project-03-cover.jpg"
-                    alt="NeedS — immagine principale"
-                >
+                <div class="parallax-frame" data-reveal="mask">
+
+                    <img
+                        src="images/progetto-3/project-03-cover.jpg"
+                        alt="NeedS — immagine principale"
+                    >
+
+                </div>
 
             </div>
 
@@ -139,7 +161,7 @@
 
             <div class="container project-story-grid">
 
-                <p class="section-number">
+                <p class="section-number" data-reveal>
                     03 / 04
                 </p>
 
@@ -150,17 +172,12 @@
                         <em>soft structures.</em>
                     </h2>
 
-                    <p>
-                         The project draws inspiration from nomadic peoples, who sustain their way of life through values
-that have remained intact over time, as opposed to a society that creates seemingly vital and often
-unfufillable needs. 
+                    <p data-reveal>
+                        The project draws inspiration from nomadic peoples, who sustain their way of life through values that have remained intact over time, as opposed to a society that creates seemingly vital and often unfulfillable needs.
                     </p>
 
-                    <p>
-                        Through a study of individuals in hostile contexts, I observed that their primary
-quest is for security, achieved through the perception of protection of the body in movement.
-guaranteed by clothing, and the availablity of shelter during moments of stasis. This approach has
-allowed meto develop a garment capable of responding to both needs.
+                    <p data-reveal>
+                        Through a study of individuals in hostile contexts, I observed that their primary quest is for security, achieved through the perception of protection of the body in movement, guaranteed by clothing, and the availability of shelter during moments of stasis. This approach has allowed me to develop a garment capable of responding to both needs.
                     </p>
 
                 </div>
@@ -174,7 +191,7 @@ allowed meto develop a garment capable of responding to both needs.
 
             <div class="container">
 
-                <div class="portfolio-carousel">
+                <div class="portfolio-carousel" data-reveal="scale">
 
                     <button
                         class="carousel-button carousel-prev"
@@ -188,7 +205,7 @@ allowed meto develop a garment capable of responding to both needs.
 
                         <div class="carousel-track">
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-3/project-03-01.jpg"
@@ -197,7 +214,7 @@ allowed meto develop a garment capable of responding to both needs.
                                 </div>
                             </article>
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-3/project-03-02.jpg"
@@ -206,7 +223,7 @@ allowed meto develop a garment capable of responding to both needs.
                                 </div>
                             </article>
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-3/project-03-03.jpg"
@@ -215,23 +232,24 @@ allowed meto develop a garment capable of responding to both needs.
                                 </div>
                             </article>
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-3/project-03-04.jpg"
                                         alt="Vestito-tenda fase 4"
                                     >
                                 </div>
-                            </article>    
+                            </article>
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-3/project-03-05.jpg"
                                         alt="Vestito-tenda fase 5"
                                     >
                                 </div>
-                            </article>                          
+                            </article>
+
                         </div>
 
                     </div>
@@ -245,6 +263,7 @@ allowed meto develop a garment capable of responding to both needs.
                     </button>
 
                 </div>
+
             </div>
 
         </section>
@@ -254,15 +273,15 @@ allowed meto develop a garment capable of responding to both needs.
 
             <div class="container">
 
-                <p class="eyebrow">
+                <p class="eyebrow" data-reveal>
                     Next project
                 </p>
 
-                <a href="project-04.html">
+                <a href="project-04.html" data-magnetic="0.15">
 
                     <h2>
-                        Maremonti
-                        <em>→</em>
+                        Mare-Monti
+                        <span class="arrow">→</span>
                     </h2>
 
                 </a>
@@ -290,7 +309,6 @@ allowed meto develop a garment capable of responding to both needs.
 
             </div>
 
-
             <div class="footer-links">
 
                 <a href="mailto:tondi.chiara@outlook.it">
@@ -305,8 +323,15 @@ allowed meto develop a garment capable of responding to both needs.
                     LinkedIn
                 </a>
 
-            </div>
+                <a
+                    href="https://www.instagram.com/tndchr/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Instagram
+                </a>
 
+            </div>
 
             <p class="copyright">
                 © 2026 Chiara Tondi

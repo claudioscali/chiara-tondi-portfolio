@@ -16,6 +16,18 @@
 
     <title>Portfolio — Chiara Tondi</title>
 
+    <script>
+        (function () {
+            var t = localStorage.getItem("theme");
+            if (
+                t === "dark" ||
+                (!t && window.matchMedia("(prefers-color-scheme: dark)").matches)
+            ) {
+                document.documentElement.setAttribute("data-theme", "dark");
+            }
+        })();
+    </script>
+
     <link
         rel="preconnect"
         href="https://fonts.googleapis.com"
@@ -28,7 +40,7 @@
     >
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600&display=swap"
         rel="stylesheet"
     >
 
@@ -38,16 +50,15 @@
 
 
 <body>
-    <div class="custom-cursor"></div>
 
     <header class="site-header">
 
         <div class="container nav-wrapper">
 
             <a class="logo" href="index.html">
-    <img src="images/logo.jpg" alt="Chiara Tondi">
-    CHIARA TONDI
-</a>
+                <img src="images/logo.jpg" alt="Chiara Tondi">
+                CHIARA TONDI
+            </a>
 
             <nav aria-label="Navigazione principale">
 
@@ -67,7 +78,17 @@
                     Contact
                 </a>
 
-                <button id="theme-toggle" class="button" style="margin-top: 0; padding: 0.5rem 1rem;">🌓</button>
+                <button id="theme-toggle" type="button" aria-label="Cambia tema">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <g class="icon-moon">
+                            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+                        </g>
+                        <g class="icon-sun">
+                            <circle cx="12" cy="12" r="4"/>
+                            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+                        </g>
+                    </svg>
+                </button>
 
             </nav>
 
@@ -82,7 +103,7 @@
 
             <div class="container">
 
-                <p class="eyebrow">
+                <p class="eyebrow" data-reveal>
                     Selected work
                 </p>
 
@@ -100,200 +121,200 @@
 
             <div class="container">
 
-                <div class="portfolio-carousel">
+                <div class="portfolio-carousel" data-reveal="scale">
 
-    <button
-        class="carousel-button carousel-prev"
-        type="button"
-        aria-label="Previous project"
-    >
-        ←
-    </button>
+                    <button
+                        class="carousel-button carousel-prev"
+                        type="button"
+                        aria-label="Previous project"
+                    >
+                        ←
+                    </button>
 
-    <div class="carousel-viewport">
+                    <div class="carousel-viewport">
 
-        <div class="carousel-track">
+                        <div class="carousel-track">
 
-            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="View">
 
-                <a href="project-01.html">
+                                <a href="project-01.html">
 
-                    <div class="portfolio-image">
+                                    <div class="portfolio-image">
 
-                        <span class="carousel-number">
-                            01
-                        </span>
+                                        <span class="carousel-number">
+                                            01
+                                        </span>
 
-                        <img
-                            src="images/progetto-1/project-01-cover.jpg"
-                            alt="Andar Ocando"
-                        >
+                                        <img
+                                            src="images/progetto-1/project-01-cover.jpg"
+                                            alt="Andar Ocando"
+                                        >
+
+                                    </div>
+
+                                </a>
+
+                                <div class="portfolio-meta">
+
+                                    <div>
+
+                                        <h2>
+                                            Andar Ocando
+                                        </h2>
+
+                                        <p>
+                                            Fashion Collection · 2026
+                                        </p>
+
+                                    </div>
+
+                                    <span>
+                                        01
+                                    </span>
+
+                                </div>
+
+                            </article>
+
+
+                            <article class="portfolio-card" data-cursor="View">
+
+                                <a href="project-02.html">
+
+                                    <div class="portfolio-image">
+
+                                        <span class="carousel-number">
+                                            02
+                                        </span>
+
+                                        <img
+                                            src="images/progetto-2/project-02-cover.jpg"
+                                            alt="A-liquida"
+                                        >
+
+                                    </div>
+
+                                </a>
+
+                                <div class="portfolio-meta">
+
+                                    <div>
+
+                                        <h2>
+                                            A-liquida
+                                        </h2>
+
+                                        <p>
+                                            Textile Research · 2024
+                                        </p>
+
+                                    </div>
+
+                                    <span>
+                                        02
+                                    </span>
+
+                                </div>
+
+                            </article>
+
+
+                            <article class="portfolio-card" data-cursor="View">
+
+                                <a href="project-03.html">
+
+                                    <div class="portfolio-image">
+
+                                        <span class="carousel-number">
+                                            03
+                                        </span>
+
+                                        <img
+                                            src="images/progetto-3/project-03-cover.jpg"
+                                            alt="NeedS"
+                                        >
+
+                                    </div>
+
+                                </a>
+
+                                <div class="portfolio-meta">
+
+                                    <div>
+
+                                        <h2>
+                                            NeedS
+                                        </h2>
+
+                                        <p>
+                                            Experimental Design · 2025
+                                        </p>
+
+                                    </div>
+
+                                    <span>
+                                        03
+                                    </span>
+
+                                </div>
+
+                            </article>
+
+
+                            <article class="portfolio-card" data-cursor="View">
+
+                                <a href="project-04.html">
+
+                                    <div class="portfolio-image">
+
+                                        <span class="carousel-number">
+                                            04
+                                        </span>
+
+                                        <img
+                                            src="images/progetto-4/project-04-cover.jpg"
+                                            alt="Mare-monti"
+                                        >
+
+                                    </div>
+
+                                </a>
+
+                                <div class="portfolio-meta">
+
+                                    <div>
+
+                                        <h2>
+                                            Mare-Monti
+                                        </h2>
+
+                                        <p>
+                                            Material Experiment · 2025
+                                        </p>
+
+                                    </div>
+
+                                    <span>
+                                        04
+                                    </span>
+
+                                </div>
+
+                            </article>
+
+                        </div>
 
                     </div>
 
-                </a>
-
-                <div class="portfolio-meta">
-
-                    <div>
-
-                        <h2>
-                            Andar Ocando
-                        </h2>
-
-                        <p>
-                            Fashion Collection · 2026
-                        </p>
-
-                    </div>
-
-                    <span>
-                        01
-                    </span>
+                    <button
+                        class="carousel-button carousel-next"
+                        type="button"
+                        aria-label="Next project"
+                    >
+                        →
+                    </button>
 
                 </div>
-
-            </article>
-
-
-            <article class="portfolio-card">
-
-                <a href="project-02.html">
-
-                    <div class="portfolio-image">
-
-                        <span class="carousel-number">
-                            02
-                        </span>
-
-                        <img
-                            src="images/progetto-2/project-02-cover.jpg"
-                            alt="A-liquida"
-                        >
-
-                    </div>
-
-                </a>
-
-                <div class="portfolio-meta">
-
-                    <div>
-
-                        <h2>
-                            A-liquida
-                        </h2>
-
-                        <p>
-                            Textile Research · 2024
-                        </p>
-
-                    </div>
-
-                    <span>
-                        02
-                    </span>
-
-                </div>
-
-            </article>
-
-
-            <article class="portfolio-card">
-
-                <a href="project-03.html">
-
-                    <div class="portfolio-image">
-
-                        <span class="carousel-number">
-                            03
-                        </span>
-
-                        <img
-                            src="images/progetto-3/project-03-cover.jpg"
-                            alt="NeedS"
-                        >
-
-                    </div>
-
-                </a>
-
-                <div class="portfolio-meta">
-
-                    <div>
-
-                        <h2>
-                            NeedS
-                        </h2>
-
-                        <p>
-                            Experimental Design · 2025
-                        </p>
-
-                    </div>
-
-                    <span>
-                        03
-                    </span>
-
-                </div>
-
-            </article>
-
-
-            <article class="portfolio-card">
-
-                <a href="project-04.html">
-
-                    <div class="portfolio-image">
-
-                        <span class="carousel-number">
-                            04
-                        </span>
-
-                        <img
-                            src="images/progetto-4/project-04-cover.jpg"
-                            alt="Nuovo Progetto"
-                        >
-
-                    </div>
-
-                </a>
-
-                <div class="portfolio-meta">
-
-                    <div>
-
-                        <h2>
-                            Nuovo Progetto
-                        </h2>
-
-                        <p>
-                            Material Experiment · 2025
-                        </p>
-
-                    </div>
-
-                    <span>
-                        04
-                    </span>
-
-                </div>
-
-            </article>
-
-        </div>
-
-    </div>
-
-    <button
-        class="carousel-button carousel-next"
-        type="button"
-        aria-label="Next project"
-    >
-        →
-    </button>
-
-</div>
 
             </div>
 

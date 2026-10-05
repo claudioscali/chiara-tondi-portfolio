@@ -1,3 +1,9 @@
+/* ========================================
+   CAROUSEL.JS
+   Carosello infinito con drag/swipe,
+   autoplay, dots, contatore e tastiera.
+======================================== */
+
 document.addEventListener("DOMContentLoaded", () => {
 
     const carousel = document.querySelector(".portfolio-carousel");
@@ -28,32 +34,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* ========================================
-       LOOP INFINITO
+       LOOP INFINITO (cloni prima e dopo)
     ======================================== */
 
     originalSlides.forEach((slide) => {
-
         const clone = slide.cloneNode(true);
-
+        clone.setAttribute("aria-hidden", "true");
         track.appendChild(clone);
-
     });
-
 
     originalSlides
         .slice()
         .reverse()
         .forEach((slide) => {
-
             const clone = slide.cloneNode(true);
-
-            track.insertBefore(
-                clone,
-                track.firstChild
-            );
-
+            clone.setAttribute("aria-hidden", "true");
+            track.insertBefore(clone, track.firstChild);
         });
-
 
     const slides = Array.from(
         track.querySelectorAll(".portfolio-card")
@@ -66,42 +63,89 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let index = slideCount;
 
+    // Indice logico 0..slideCount-1 per dots e contatore
+    function logicalIndex() {
+        return (
+            ((index - slideCount) % slideCount + slideCount)
+        ) % slideCount;
+    }
+
+
+    /* ========================================
+       DOTS + CONTATORE (generati dal JS)
+    ======================================== */
+
+    const dots = document.createElement("div");
+    dots.className = "carousel-dots";
+    dots.setAttribute("role", "tablist");
+    dots.setAttribute("aria-label", "Slides");
+
+    const dotButtons = [];
+
+    for (let i = 0; i < slideCount; i++) {
+        const dot = document.createElement("button");
+        dot.className = "carousel-dot";
+        dot.type = "button";
+        dot.setAttribute("aria-label", `Vai alla slide ${i + 1}`);
+
+        dot.addEventListener("click", () => {
+            goToSlide(index + (i - logicalIndex()));
+            restartAutoplay();
+        });
+
+        dots.appendChild(dot);
+        dotButtons.push(dot);
+    }
+
+    const counter = document.createElement("p");
+    counter.className = "carousel-counter";
+    counter.setAttribute("aria-hidden", "true");
+
+    carousel.appendChild(dots);
+    carousel.appendChild(counter);
+
+    function updateDots() {
+        const current = logicalIndex();
+
+        dotButtons.forEach((dot, i) => {
+            dot.classList.toggle("is-current", i === current);
+        });
+
+        counter.textContent = `${String(current + 1).padStart(2, "0")} / ${String(slideCount).padStart(2, "0")}`;
+    }
+
 
     /* ========================================
        POSIZIONE CENTRALE
     ======================================== */
 
     function getCenterPosition(slideIndex) {
-
         const slide = slides[slideIndex];
 
         if (!slide) {
             return 0;
         }
 
-        const viewportWidth =
-            viewport.clientWidth;
-
-        const slideLeft =
-            slide.offsetLeft;
-
-        const slideWidth =
-            slide.offsetWidth;
+        const viewportWidth = viewport.clientWidth;
+        const slideLeft = slide.offsetLeft;
+        const slideWidth = slide.offsetWidth;
 
         return -(
             slideLeft -
-            (viewportWidth / 2) +
-            (slideWidth / 2)
+            viewportWidth / 2 +
+            slideWidth / 2
         );
     }
-/* ========================================
-       AGGIORNAMENTO CAROUSEL (MODIFICATO)
+
+
+    /* ========================================
+       AGGIORNAMENTO CAROUSEL
     ======================================== */
+
     function updateCarousel(animate = true) {
         const translate = getCenterPosition(index);
 
         if (!animate) {
-            // Blocca tutte le transizioni CSS sui figli del carosello
             carousel.classList.add("disable-transitions");
         }
 
@@ -122,13 +166,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
+        updateDots();
+
         if (!animate) {
-            // Forza il reflow del browser affinché le modifiche siano istantanee
-            void track.offsetWidth; 
-            // Riattiva le transizioni
-            /*carousel.classList.remove("disable-transitions");*/
-            // Aspettiamo che il browser disegni effettivamente il frame 
-            // prima di riattivare le transizioni CSS
+            void track.offsetWidth;
+
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                     carousel.classList.remove("disable-transitions");
@@ -136,10 +178,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
     }
-
-    /* ========================================
-       POSIZIONE INIZIALE
-    ======================================== */
 
     updateCarousel(false);
 
@@ -149,104 +187,83 @@ document.addEventListener("DOMContentLoaded", () => {
     ======================================== */
 
     function goToSlide(slideIndex) {
-
-        if (
-            slideIndex < 0 ||
-            slideIndex >= slides.length
-        ) {
+        if (slideIndex < 0 || slideIndex >= slides.length) {
             return;
         }
 
         index = slideIndex;
-
         updateCarousel(true);
-
     }
 
 
     /* ========================================
-       NEXT
+       PULSANTI NEXT / PREV
     ======================================== */
 
     if (nextButton) {
-
-        nextButton.addEventListener(
-            "click",
-            (event) => {
-
-                event.preventDefault();
-
-                index++;
-
-                updateCarousel(true);
-
-            }
-        );
-
+        nextButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            index++;
+            updateCarousel(true);
+            restartAutoplay();
+        });
     }
-
-
-    /* ========================================
-       PREVIOUS
-    ======================================== */
 
     if (prevButton) {
-
-        prevButton.addEventListener(
-            "click",
-            (event) => {
-
-                event.preventDefault();
-
-                index--;
-
-                updateCarousel(true);
-
-            }
-        );
-
+        prevButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            index--;
+            updateCarousel(true);
+            restartAutoplay();
+        });
     }
 
 
     /* ========================================
-       LOOP INFINITO
+       TASTIERA (solo quando il carosello
+       è visibile nel viewport)
     ======================================== */
 
-    track.addEventListener(
-        "transitionend",
-        (event) => {
-            
-            // FONDAMENTALE: impedisce che le animazioni delle singole 
-            // card interferiscano con la transizione della traccia base
-            if (event.target !== track) {
-                return;
-            }
+    let carouselVisible = false;
 
-            if (event.propertyName !== "transform") {
-                return;
-            }
+    document.addEventListener("keydown", (event) => {
+        if (!carouselVisible) return;
 
-
-            if (index >= slideCount * 2) {
-
-                index = slideCount;
-
-                updateCarousel(false);
-
-            }
-
-
-            if (index < slideCount) {
-
-                index =
-                    slideCount * 2 - 1;
-
-                updateCarousel(false);
-
-            }
-
+        if (event.key === "ArrowRight") {
+            index++;
+            updateCarousel(true);
+            restartAutoplay();
+        } else if (event.key === "ArrowLeft") {
+            index--;
+            updateCarousel(true);
+            restartAutoplay();
         }
-    );
+    });
+
+
+    /* ========================================
+       RICUCITURA DEL LOOP INFINITO
+    ======================================== */
+
+    track.addEventListener("transitionend", (event) => {
+        if (event.target !== track) {
+            return;
+        }
+
+        if (event.propertyName !== "transform") {
+            return;
+        }
+
+        if (index >= slideCount * 2) {
+            index = slideCount;
+            updateCarousel(false);
+        }
+
+        if (index < slideCount) {
+            index = slideCount * 2 - 1;
+            updateCarousel(false);
+        }
+    });
 
 
     /* ========================================
@@ -259,366 +276,166 @@ document.addEventListener("DOMContentLoaded", () => {
     let dragging = false;
     let hasDragged = false;
 
-    /*
-     * Memorizziamo la card premuta.
-     *
-     * Questo è importante perché con
-     * setPointerCapture() il click successivo
-     * potrebbe avere come target il viewport
-     * invece della card.
-     */
-
     let pressedCard = null;
 
-
-    /* ========================================
-       POINTER DOWN
-    ======================================== */
-
-    viewport.addEventListener(
-        "pointerdown",
-        (event) => {
-
-            if (
-                event.pointerType === "mouse" &&
-                event.button !== 0
-            ) {
-                return;
-            }
-
-
-            dragging = true;
-            hasDragged = false;
-
-
-            startX = event.clientX;
-            currentX = event.clientX;
-
-
-            /*
-             * Salviamo la card effettivamente
-             * premuta.
-             */
-
-            pressedCard =
-                event.target.closest(
-                    ".portfolio-card"
-                );
-
-
-            /*
-             * Pointer capture per mantenere
-             * il drag attivo anche se il cursore
-             * esce dal viewport.
-             */
-
-            viewport.setPointerCapture(
-                event.pointerId
-            );
-
-
-            track.style.transition =
-                "none";
-
+    viewport.addEventListener("pointerdown", (event) => {
+        if (
+            event.pointerType === "mouse" &&
+            event.button !== 0
+        ) {
+            return;
         }
-    );
 
+        dragging = true;
+        hasDragged = false;
 
-    /* ========================================
-       POINTER MOVE
-    ======================================== */
+        startX = event.clientX;
+        currentX = event.clientX;
 
-    viewport.addEventListener(
-        "pointermove",
-        (event) => {
+        pressedCard = event.target.closest(".portfolio-card");
 
-            if (!dragging) {
-                return;
-            }
+        viewport.setPointerCapture(event.pointerId);
 
+        track.style.transition = "none";
+    });
 
-            currentX = event.clientX;
-
-
-            const difference =
-                currentX - startX;
-
-
-            if (Math.abs(difference) > 10) {
-
-                hasDragged = true;
-
-            }
-
-
-            const basePosition =
-                getCenterPosition(index);
-
-
-            track.style.transform =
-                `translateX(${basePosition + difference}px)`;
-
+    viewport.addEventListener("pointermove", (event) => {
+        if (!dragging) {
+            return;
         }
-    );
 
+        currentX = event.clientX;
 
-    /* ========================================
-       POINTER UP
-    ======================================== */
+        const difference = currentX - startX;
 
-    viewport.addEventListener(
-        "pointerup",
-        (event) => {
+        if (Math.abs(difference) > 10) {
+            hasDragged = true;
+        }
 
-            if (!dragging) {
-                return;
-            }
+        const basePosition = getCenterPosition(index);
 
+        track.style.transform =
+            `translateX(${basePosition + difference}px)`;
+    });
 
-            dragging = false;
+    viewport.addEventListener("pointerup", (event) => {
+        if (!dragging) {
+            return;
+        }
 
+        dragging = false;
 
-            if (
-                viewport.hasPointerCapture(
-                    event.pointerId
-                )
-            ) {
+        if (viewport.hasPointerCapture(event.pointerId)) {
+            viewport.releasePointerCapture(event.pointerId);
+        }
 
-                viewport.releasePointerCapture(
-                    event.pointerId
-                );
+        const difference = currentX - startX;
 
-            }
-
-
-            const difference =
-                currentX - startX;
-
-
-            /*
-             * Swipe verso sinistra
-             */
-
-            if (difference < -50) {
-
-                index++;
-
-                updateCarousel(true);
-
-                return;
-            }
-
-
-            /*
-             * Swipe verso destra
-             */
-
-            if (difference > 50) {
-
-                index--;
-
-                updateCarousel(true);
-
-                return;
-            }
-
-
-            /*
-             * Movimento troppo piccolo:
-             * ritorniamo semplicemente
-             * alla posizione originale.
-             */
-
+        // Swipe verso sinistra
+        if (difference < -50) {
+            index++;
             updateCarousel(true);
-
+            return;
         }
-    );
 
-
-    /* ========================================
-       POINTER CANCEL
-    ======================================== */
-
-    viewport.addEventListener(
-        "pointercancel",
-        (event) => {
-
-            if (!dragging) {
-                return;
-            }
-
-
-            dragging = false;
-
-
-            if (
-                viewport.hasPointerCapture(
-                    event.pointerId
-                )
-            ) {
-
-                viewport.releasePointerCapture(
-                    event.pointerId
-                );
-
-            }
-
-
+        // Swipe verso destra
+        if (difference > 50) {
+            index--;
             updateCarousel(true);
-
+            return;
         }
-    );
+
+        // Movimento troppo piccolo: torna alla posizione
+        updateCarousel(true);
+    });
+
+    viewport.addEventListener("pointercancel", (event) => {
+        if (!dragging) {
+            return;
+        }
+
+        dragging = false;
+
+        if (viewport.hasPointerCapture(event.pointerId)) {
+            viewport.releasePointerCapture(event.pointerId);
+        }
+
+        updateCarousel(true);
+    });
 
 
     /* ========================================
        CLICK SULLE CARD
     ======================================== */
 
-    viewport.addEventListener(
-        "click",
-        (event) => {
+    viewport.addEventListener("click", (event) => {
+        let clickedCard = event.target.closest(".portfolio-card");
 
-            /*
-             * Prima proviamo a trovare la card
-             * normalmente.
-             */
+        // Con pointer capture il target può essere il viewport
+        if (!clickedCard) {
+            clickedCard = pressedCard;
+        }
 
-            let clickedCard =
-                event.target.closest(
-                    ".portfolio-card"
-                );
+        if (!clickedCard) {
+            return;
+        }
 
-
-            /*
-             * Se Pointer Capture ha fatto sì che
-             * il target sia il viewport, usiamo
-             * la card che avevamo memorizzato
-             * al pointerdown.
-             */
-
-            if (!clickedCard) {
-
-                clickedCard = pressedCard;
-
-            }
-
-
-            if (!clickedCard) {
-                return;
-            }
-
-
-            /*
-             * Se l'utente ha effettuato un vero
-             * drag/swipe, NON deve partire
-             * il click.
-             */
-
-            if (hasDragged) {
-
-                event.preventDefault();
-
-                hasDragged = false;
-                pressedCard = null;
-
-                return;
-            }
-
-
-            /*
-             * Troviamo l'indice della card cliccata.
-             */
-
-            const clickedIndex =
-                slides.indexOf(clickedCard);
-
-
-            if (clickedIndex === -1) {
-
-                pressedCard = null;
-
-                return;
-            }
-
-
-            /* --------------------------------
-               CARD CENTRALE
-            -------------------------------- */
-
-            if (
-                clickedIndex === index
-            ) {
-
-                /*
-                 * La card è centrale.
-                 *
-                 * Recuperiamo il suo link
-                 * e lasciamo che il browser
-                 * apra la pagina.
-                 */
-
-                const link =
-                    clickedCard.querySelector(
-                        "a"
-                    );
-
-
-                if (link) {
-
-                    window.location.href =
-                        link.href;
-
-                }
-
-
-                pressedCard = null;
-
-                return;
-            }
-
-
-            /* --------------------------------
-               CARD LATERALE
-            -------------------------------- */
-
+        // Un vero drag non deve scatenare il click
+        if (hasDragged) {
             event.preventDefault();
+            hasDragged = false;
+            pressedCard = null;
+            return;
+        }
 
+        const clickedIndex = slides.indexOf(clickedCard);
 
-            /*
-             * Portiamo al centro
-             * la card cliccata.
-             */
+        if (clickedIndex === -1) {
+            pressedCard = null;
+            return;
+        }
 
-            goToSlide(clickedIndex);
+        /* ---------- CARD CENTRALE ---------- */
 
+        if (clickedIndex === index) {
+            const link = clickedCard.querySelector("a");
+
+            if (link) {
+                window.location.href = link.href;
+            }
 
             pressedCard = null;
-
+            return;
         }
-    );
+
+        /* ---------- CARD LATERALE ---------- */
+
+        event.preventDefault();
+        goToSlide(clickedIndex);
+        restartAutoplay();
+
+        pressedCard = null;
+    });
 
 
     /* ========================================
        RESIZE
     ======================================== */
 
-    window.addEventListener(
-        "resize",
-        () => {
+    window.addEventListener("resize", () => {
+        updateCarousel(false);
+    });
 
-            updateCarousel(false);
 
-        }
-    );
-
-/* ========================================
-       AUTOPLAY & VISIBILITA'
+    /* ========================================
+       AUTOPLAY & VISIBILITÀ
     ======================================== */
-    let autoplayTimer;
+
+    let autoplayTimer = null;
     const autoplayDelay = 4000;
 
     function startAutoplay() {
-        stopAutoplay(); 
+        stopAutoplay();
         autoplayTimer = setInterval(() => {
             index++;
             updateCarousel(true);
@@ -627,25 +444,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function stopAutoplay() {
         clearInterval(autoplayTimer);
+        autoplayTimer = null;
     }
 
-    // 1. Avvia l'autoplay quando il carosello entra nella visuale
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                startAutoplay();
-            } else {
-                stopAutoplay();
-            }
-        });
-    }, {
-        threshold: 0.15
-    });
+    function restartAutoplay() {
+        if (carouselVisible) {
+            startAutoplay();
+        }
+    }
+
+    // Avvia/ferma l'autoplay in base alla visibilità
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                carouselVisible = entry.isIntersecting;
+
+                if (entry.isIntersecting) {
+                    startAutoplay();
+                } else {
+                    stopAutoplay();
+                }
+            });
+        },
+        { threshold: 0.15 }
+    );
 
     observer.observe(carousel);
 
-    // 2. Metti in pausa SOLO durante l'interazione attiva (click/drag)
+    // Pausa durante l'interazione attiva
     viewport.addEventListener("pointerdown", stopAutoplay);
     viewport.addEventListener("pointerup", startAutoplay);
     viewport.addEventListener("pointercancel", startAutoplay);
+
+    // Pausa quando il mouse è sopra il carosello
+    viewport.addEventListener("pointerenter", (event) => {
+        if (event.pointerType === "mouse") {
+            stopAutoplay();
+        }
+    });
+
+    viewport.addEventListener("pointerleave", (event) => {
+        if (event.pointerType === "mouse") {
+            startAutoplay();
+        }
+    });
+
+    // Pausa quando la scheda del browser non è visibile
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+            stopAutoplay();
+        } else if (carouselVisible) {
+            startAutoplay();
+        }
+    });
 });

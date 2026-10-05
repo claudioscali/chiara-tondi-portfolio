@@ -16,6 +16,18 @@
 
     <title>Andar Ocando — Chiara Tondi</title>
 
+    <script>
+        (function () {
+            var t = localStorage.getItem("theme");
+            if (
+                t === "dark" ||
+                (!t && window.matchMedia("(prefers-color-scheme: dark)").matches)
+            ) {
+                document.documentElement.setAttribute("data-theme", "dark");
+            }
+        })();
+    </script>
+
     <link
         rel="preconnect"
         href="https://fonts.googleapis.com"
@@ -28,7 +40,7 @@
     >
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600&display=swap"
         rel="stylesheet"
     >
 
@@ -38,16 +50,15 @@
 
 
 <body>
-    <div class="custom-cursor"></div>
 
     <header class="site-header">
 
         <div class="container nav-wrapper">
 
             <a class="logo" href="index.html">
-    <img src="images/logo.jpg" alt="Chiara Tondi">
-    CHIARA TONDI
-</a>
+                <img src="images/logo.jpg" alt="Chiara Tondi">
+                CHIARA TONDI
+            </a>
 
             <nav aria-label="Navigazione principale">
 
@@ -67,7 +78,17 @@
                     Contact
                 </a>
 
-                <button id="theme-toggle" class="button" style="margin-top: 0; padding: 0.5rem 1rem;">🌓</button>
+                <button id="theme-toggle" type="button" aria-label="Cambia tema">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <g class="icon-moon">
+                            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+                        </g>
+                        <g class="icon-sun">
+                            <circle cx="12" cy="12" r="4"/>
+                            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+                        </g>
+                    </svg>
+                </button>
 
             </nav>
 
@@ -84,7 +105,7 @@
 
                 <div>
 
-                    <p class="eyebrow">
+                    <p class="eyebrow" data-reveal>
                         Fashion Collection · 2026
                     </p>
 
@@ -98,12 +119,12 @@
 
                 <div class="project-description">
 
-                    <p>
+                    <p data-reveal>
                         Una ricerca sulle relazioni tra corpo,
                         volume e movimento.
                     </p>
 
-                    <div class="project-data">
+                    <div class="project-data" data-reveal-stagger>
 
                         <span>
                             Year
@@ -133,10 +154,14 @@
 
             <div class="container">
 
-                <img
-                    src="images/progetto-1/project-01-cover.jpg"
-                    alt="Andar Ocando — immagine principale della collezione"
-                >
+                <div class="parallax-frame" data-reveal="mask">
+
+                    <img
+                        src="images/progetto-1/project-01-cover.jpg"
+                        alt="Andar Ocando — immagine principale della collezione"
+                    >
+
+                </div>
 
             </div>
 
@@ -147,7 +172,7 @@
 
             <div class="container project-story-grid">
 
-                <p class="section-number">
+                <p class="section-number" data-reveal>
                     01 / 04
                 </p>
 
@@ -158,13 +183,13 @@
                         between <em>body and form.</em>
                     </h2>
 
-                    <p>
+                    <p data-reveal>
                         Il progetto nasce da una ricerca sulle forme
                         architettoniche e sulla loro traduzione
                         all'interno della silhouette.
                     </p>
 
-                    <p>
+                    <p data-reveal>
                         Attraverso tagli, sovrapposizioni e volumi
                         differenti, il corpo diventa il punto di
                         partenza per una nuova costruzione dell'abito.
@@ -181,7 +206,7 @@
 
             <div class="container">
 
-                <div class="portfolio-carousel">
+                <div class="portfolio-carousel" data-reveal="scale">
 
                     <button
                         class="carousel-button carousel-prev"
@@ -195,7 +220,7 @@
 
                         <div class="carousel-track">
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-1/project-01-01.jpg"
@@ -204,7 +229,7 @@
                                 </div>
                             </article>
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-1/project-01-02.jpg"
@@ -213,7 +238,7 @@
                                 </div>
                             </article>
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-1/project-01-03.jpg"
@@ -222,7 +247,7 @@
                                 </div>
                             </article>
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-1/project-01-04.jpg"
@@ -231,7 +256,7 @@
                                 </div>
                             </article>
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-1/project-01-05.jpg"
@@ -240,7 +265,7 @@
                                 </div>
                             </article>
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-1/project-01-06.jpg"
@@ -249,14 +274,15 @@
                                 </div>
                             </article>
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-1/project-01-07.jpg"
                                         alt="Dettaglio finale della collezione Andar Ocando"
                                     >
                                 </div>
-                            </article>                            
+                            </article>
+
                         </div>
 
                     </div>
@@ -280,15 +306,15 @@
 
             <div class="container">
 
-                <p class="eyebrow">
+                <p class="eyebrow" data-reveal>
                     Next project
                 </p>
 
-                <a href="project-02.html">
+                <a href="project-02.html" data-magnetic="0.15">
 
                     <h2>
                         A-Liquida
-                        →
+                        <span class="arrow">→</span>
                     </h2>
 
                 </a>
@@ -329,7 +355,7 @@
                 >
                     LinkedIn
                 </a>
-                
+
                 <a
                     href="https://www.instagram.com/tndchr/"
                     target="_blank"

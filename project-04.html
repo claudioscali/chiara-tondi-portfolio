@@ -11,10 +11,22 @@
 
     <meta
         name="description"
-        content="Nome Progetto — experimental fashion design project."
+        content="Mare-Monti — experimental fashion design project."
     >
 
-    <title>Maremonti — Chiara Tondi</title>
+    <title>Mare-Monti — Chiara Tondi</title>
+
+    <script>
+        (function () {
+            var t = localStorage.getItem("theme");
+            if (
+                t === "dark" ||
+                (!t && window.matchMedia("(prefers-color-scheme: dark)").matches)
+            ) {
+                document.documentElement.setAttribute("data-theme", "dark");
+            }
+        })();
+    </script>
 
     <link
         rel="preconnect"
@@ -28,7 +40,7 @@
     >
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600&display=swap"
         rel="stylesheet"
     >
 
@@ -38,16 +50,15 @@
 
 
 <body>
-    <div class="custom-cursor"></div>
 
     <header class="site-header">
 
         <div class="container nav-wrapper">
 
             <a class="logo" href="index.html">
-    <img src="images/logo.jpg" alt="Chiara Tondi">
-    CHIARA TONDI
-</a>
+                <img src="images/logo.jpg" alt="Chiara Tondi">
+                CHIARA TONDI
+            </a>
 
             <nav aria-label="Navigazione principale">
 
@@ -59,7 +70,17 @@
 
                 <a href="contact.html">Contact</a>
 
-                <button id="theme-toggle" class="button" style="margin-top: 0; padding: 0.5rem 1rem;">🌓</button>
+                <button id="theme-toggle" type="button" aria-label="Cambia tema">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <g class="icon-moon">
+                            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+                        </g>
+                        <g class="icon-sun">
+                            <circle cx="12" cy="12" r="4"/>
+                            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>
+                        </g>
+                    </svg>
+                </button>
 
             </nav>
 
@@ -76,39 +97,38 @@
 
                 <div>
 
-                    <p class="eyebrow">
-                        Experimental Design · 2025
+                    <p class="eyebrow" data-reveal>
+                        Knitwear & Experimental Design · 2026
                     </p>
 
                     <h1>
-                        <em>Maremonti</em>
-                    </h1>
+                        <em>Mare-Monti</em></h1>
 
                 </div>
 
 
                 <div class="project-description">
 
-                    <p>
+                    <p data-reveal>
                         Uno studio sulle forme geometriche
                         reinterpretate attraverso materiali morbidi.
                     </p>
 
-                    <div class="project-data">
+                    <div class="project-data" data-reveal-stagger>
 
                         <span>
                             Year
-                            <strong>2025</strong>
+                            <strong>2026</strong>
                         </span>
 
                         <span>
                             Category
-                            <strong>Experimental Design</strong>
+                            <strong>Knitwear & Experimental Design</strong>
                         </span>
 
                         <span>
                             Techniques
-                            <strong>Draping & </strong>
+                            <strong>Machine Knitting, Garment Construction, Draping</strong>
                         </span>
 
                     </div>
@@ -124,11 +144,14 @@
 
             <div class="container">
 
-                <img
-                    src="images/progetto-4/project-04-cover3.jpg"
-                    style="object-position: center down;"
-                    alt="Zaino"
-                >
+                <div class="parallax-frame" data-reveal="mask">
+
+                    <img
+                        src="images/progetto-4/project-04-cover3.jpg"
+                        alt="Zaino"
+                    >
+
+                </div>
 
             </div>
 
@@ -139,28 +162,33 @@
 
             <div class="container project-story-grid">
 
-                <p class="section-number">
-                    03 / 04
+                <p class="section-number" data-reveal>
+                    04 / 04
                 </p>
 
                 <div>
 
                     <h2>
-                        Hard shapes translated into
-                        <em>soft structures.</em>
+                        <em>Where the sea meets the summit.</em>
                     </h2>
+                    <h3>
+                        Concept
+                    </h3>
 
-                    <p>
-                         The project draws inspiration from nomadic peoples, who sustain their way of life through values
-that have remained intact over time, as opposed to a society that creates seemingly vital and often
-unfufillable needs. 
-                    </p>
-
-                    <p>
-                        Through a study of individuals in hostile contexts, I observed that their primary
-quest is for security, achieved through the perception of protection of the body in movement.
-guaranteed by clothing, and the availablity of shelter during moments of stasis. This approach has
-allowed meto develop a garment capable of responding to both needs.
+                    <p data-reveal>
+                        "Mari-Monti" explores the concept of contemporary nomadism and the fundamental human quest for security. Inspired by nomadic peoples who sustain essential values against a society driven by artificial needs, the project translates hard, architectural shapes into soft, protective structures. Through the study of the body in hostile environments, the garment becomes a wearable shelter: ensuring dynamic protection of the body in motion and offering a sanctuary during moments of stasis.                    
+                    </p>        
+                    <h3>
+                        Technical Execution
+                    </h3>             
+                    <p data-reveal>
+                        Developed as a specialized knitwear project, the collection showcases a comprehensive approach to textile creation. Every piece was designed and crafted entirely from yarn. Using machine knitting techniques, the raw yarn was transformed into custom fabrics, which were then manually draped and constructed into the final garments, bridging the gap between raw material and finished design.
+                    </p>      
+                    <h3>
+                        Aesthetic & Styling
+                    </h3>             
+                    <p data-reveal>
+                        The collection's title (translating to "Seas and Mountains") is reflected in the hybrid styling of the looks. The aesthetic thrives on sharp visual and functional contrasts: lightweight, summery elements like swimwear and sandals are layered against heavy, outdoor-inspired pieces such as structured skirts, chunky knit sweatshirts, and trekking backpacks. This duality represents the human ability to adapt to diverse ecosystems, carrying one's shelter across contrasting climates and terrains.
                     </p>
 
                 </div>
@@ -174,7 +202,7 @@ allowed meto develop a garment capable of responding to both needs.
 
             <div class="container">
 
-                <div class="portfolio-carousel">
+                <div class="portfolio-carousel" data-reveal="scale">
 
                     <button
                         class="carousel-button carousel-prev"
@@ -188,7 +216,7 @@ allowed meto develop a garment capable of responding to both needs.
 
                         <div class="carousel-track">
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-4/project-04-01.jpg"
@@ -197,7 +225,7 @@ allowed meto develop a garment capable of responding to both needs.
                                 </div>
                             </article>
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-4/project-04-02.jpg"
@@ -206,7 +234,7 @@ allowed meto develop a garment capable of responding to both needs.
                                 </div>
                             </article>
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-4/project-04-03.jpg"
@@ -215,51 +243,51 @@ allowed meto develop a garment capable of responding to both needs.
                                 </div>
                             </article>
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-4/project-04-04.jpg"
-                                        alt="Foto maglieria 1"
+                                        alt="Foto maglieria 4"
                                     >
                                 </div>
                             </article>
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-4/project-04-05.jpg"
-                                        alt="Foto maglieria 2"
+                                        alt="Foto maglieria 5"
                                     >
                                 </div>
                             </article>
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-4/project-04-06.jpg"
-                                        alt="Foto maglieria 3"
+                                        alt="Foto maglieria 6"
                                     >
                                 </div>
                             </article>
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-4/project-04-07.jpg"
-                                        alt="Foto maglieria 1"
+                                        alt="Foto maglieria 7"
                                     >
                                 </div>
                             </article>
 
-                            <article class="portfolio-card">
+                            <article class="portfolio-card" data-cursor="Drag">
                                 <div class="portfolio-image">
                                     <img
                                         src="images/progetto-4/project-04-08.jpg"
-                                        alt="Foto maglieria 2"
+                                        alt="Foto maglieria 8"
                                     >
                                 </div>
                             </article>
-                         
+
                         </div>
 
                     </div>
@@ -283,15 +311,15 @@ allowed meto develop a garment capable of responding to both needs.
 
             <div class="container">
 
-                <p class="eyebrow">
+                <p class="eyebrow" data-reveal>
                     Start a conversation
                 </p>
 
-                <a href="contact.html">
+                <a href="contact.html" data-magnetic="0.15">
 
                     <h2>
                         Let's talk
-                        <em>→</em>
+                        <span class="arrow">→</span>
                     </h2>
 
                 </a>
@@ -319,7 +347,6 @@ allowed meto develop a garment capable of responding to both needs.
 
             </div>
 
-
             <div class="footer-links">
 
                 <a href="mailto:tondi.chiara@outlook.it">
@@ -334,8 +361,15 @@ allowed meto develop a garment capable of responding to both needs.
                     LinkedIn
                 </a>
 
-            </div>
+                <a
+                    href="https://www.instagram.com/tndchr/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Instagram
+                </a>
 
+            </div>
 
             <p class="copyright">
                 © 2026 Chiara Tondi
