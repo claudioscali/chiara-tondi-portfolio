@@ -30,9 +30,9 @@ Un sito web statico e responsivo, progettato per offrire un'esperienza utente fl
 my-project/
 ├── css/
 │   └── style.css          # Fogli di stile principali
-├── images/                # Risorse grafiche e immagini
-│   ├── hero.jpg
-│   ├── logo.jpg
+├── images_webp/                # Risorse grafiche e immagini
+│   ├── hero.webp
+│   ├── logo.webp
 │   └── ...
 ├── js/                
 │   ├── animations.js

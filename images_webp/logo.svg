@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 250" width="100%" height="100%">
+  <!-- Sfondo scuro -->
+  <rect width="200" height="250" fill="#050505" />
+
+  <!-- Sagoma bianca della lampadina -->
+  <path d="M 80 180
+           C 65 180, 50 140, 45 100
+           C 40 40, 70 20, 100 20
+           C 130 20, 160 40, 155 100
+           C 150 140, 135 180, 120 180
+           C 120 190, 125 210, 120 220
+           C 115 225, 85 225, 80 220
+           C 75 210, 80 190, 80 180 Z"
+        fill="#ffffff" />
+
+  <!-- Filamento interno (Tratto a tre punte) -->
+  <path d="M 88 180
+           C 85 140, 75 110, 75 90
+           Q 85 110, 92 115
+           Q 94 95, 96 90
+           Q 102 110, 108 115
+           Q 115 105, 120 100
+           C 112 130, 108 150, 108 180"
+        fill="none" stroke="#050505" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Linee della base della lampadina -->
+  <path d="M 78 185 Q 100 190 122 185
+           M 77 195 Q 100 200 123 195
+           M 77 205 Q 100 210 123 205
+           M 79 215 Q 100 220 121 215"
+        fill="none" stroke="#050505" stroke-width="5" stroke-linecap="round" />
+</svg>
